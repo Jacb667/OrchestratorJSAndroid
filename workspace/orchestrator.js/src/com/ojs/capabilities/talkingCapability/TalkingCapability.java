@@ -49,6 +49,7 @@ public class TalkingCapability {
 	}
 
 	public JSONObject say( String str, String filter, String pitch ) throws Exception {
+		Log.d(OrchestratorJsActivity.TAG, "Talking Capability SAY " + str);
 		if( !readyForUse_ )
 			throw new Exception( "TalkingCapability not yet initialized!" );
 		
