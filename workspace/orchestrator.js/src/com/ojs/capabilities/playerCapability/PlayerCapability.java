@@ -42,7 +42,7 @@ public class PlayerCapability {
 	 * 	SDP stuff                                                            *
 	 *************************************************************************/
 	private static Context applicationContext;	
-	public void intiCapability(Context applicationContext) {
+	public void initCapability(Context applicationContext) {
 		PlayerCapability.applicationContext = applicationContext;
 	}
 	/*************************************************************************/
