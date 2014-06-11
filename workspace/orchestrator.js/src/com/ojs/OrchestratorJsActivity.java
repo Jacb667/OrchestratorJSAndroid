@@ -377,14 +377,14 @@ public class OrchestratorJsActivity extends Activity {
 			
 			// get methodcall name
 			capabilityName = (String) methodCall.get(2);
-			p(capabilityName);
+			p("capabilityName " + capabilityName);
 
 			methodCallName = (String) methodCall.get(3);
-			p(methodCallName);
+			p("methodCallName " + methodCallName);
 
 			// get arguments for the method call
 			JSONArray methodCallArguments = methodCall.getJSONArray(4);
-			p(methodCallArguments.toString());
+			p("methodCallArguments " + methodCallArguments.toString());
 
 			Object retVal = invokeMethod(capabilityName, methodCallName, methodCallArguments);
 
@@ -440,6 +440,7 @@ public class OrchestratorJsActivity extends Activity {
 	
 	private Object invokeMethod(String capabilityName, String methodCallName, JSONArray methodCallArguments) throws Exception {
 
+			p("invokeMethod " + capabilityName + " " + methodCallName);
 			Object[] classAndInstance = capabilityObjects.get(capabilityName);
 			if(classAndInstance == null) {
 				p("interface " + capabilityName + " was not enabled!");

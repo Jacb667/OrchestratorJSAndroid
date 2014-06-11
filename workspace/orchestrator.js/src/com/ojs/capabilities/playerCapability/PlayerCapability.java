@@ -50,13 +50,13 @@ public class PlayerCapability {
 	
 
 	@SuppressLint("NewApi")
-	public JSONObject showUrlPhoto(JSONArray JSONmethodcallParameters) throws Exception {
+	public JSONObject showUrlPhoto(String url) throws Exception {
 		
 		JSONObject retVal = new JSONObject();
 		try {
 			
 			
-			String url = JSONmethodcallParameters.getString(0);
+			//String url = JSONmethodcallParameters.getString(0);
 			Intent testIntent = new Intent(applicationContext, PlayerCapabilityActivity.class);
 			testIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			testIntent.putExtra("url_to_show",url);
