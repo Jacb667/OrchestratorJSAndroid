@@ -205,8 +205,6 @@ public class OrchestratorJsActivity extends Activity {
 		
 		connectBtn.getBackground().setColorFilter(0xFF00FF00, PorterDuff.Mode.MULTIPLY);
 
-
-
 		disconnectBtn = (Button) findViewById(R.id.disconnect);
 		disconnectBtn.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
@@ -362,8 +360,11 @@ public class OrchestratorJsActivity extends Activity {
 
 			String argumentsJsonString = intent.getStringExtra("arguments");
 			JSONArray arguments = new JSONArray(argumentsJsonString);
+			p("argumentsJsonString: " + argumentsJsonString);
+			p("arguments: " + arguments);
 
 			JSONArray methodCall = arguments.getJSONArray(0);
+			p("methodCall: " + methodCall);
 
 			// set the current action to the given one
 			String actionId = (String) methodCall.get(0);
@@ -372,19 +373,24 @@ public class OrchestratorJsActivity extends Activity {
 
 			String methodcallId = (String) methodCall.get(1);
 			currentMethodcallId = methodcallId;
-			p(currentMethodcallId);
+			p("currentMethodcallId: " + currentMethodcallId);
 
 			
 			// get methodcall name
 			capabilityName = (String) methodCall.get(2);
-			p("capabilityName " + capabilityName);
+			p("capabilityName: " + capabilityName);
 
 			methodCallName = (String) methodCall.get(3);
-			p("methodCallName " + methodCallName);
+			p("methodCallName: " + methodCallName);
 
 			// get arguments for the method call
-			JSONArray methodCallArguments = methodCall.getJSONArray(4);
-			p("methodCallArguments " + methodCallArguments.toString());
+			JSONArray methodCallArguments;
+			
+			if (methodCall.length() >= 5)
+				methodCallArguments = methodCall.getJSONArray(4);
+			else
+				methodCallArguments = new JSONArray();
+			p("methodCallArguments: " + methodCallArguments.toString());
 
 			Object retVal = invokeMethod(capabilityName, methodCallName, methodCallArguments);
 
@@ -412,6 +418,7 @@ public class OrchestratorJsActivity extends Activity {
 			sendException("No such method ("+capabilityName+"::"+methodCallName+"), check parameters!");
 		} catch (Exception e) {
 			p("h3");
+			p("e: " + e.getCause() + " - " + e.getMessage());
 			e.printStackTrace();
 			sendException(e.toString());
 		}
