@@ -54,7 +54,7 @@ public class OrchestratorJsActivity extends Activity {
 	public static final String TAG = "ojs";
 
 	
-	private static final String CAPABILITY_PATH = "com/ojs/capabilities/";
+	public static final String CAPABILITY_PATH = "com/ojs/capabilities/";
 
 	private static final String OJS_FILTER = "OJS_FILTER";
 	private BroadcastReceiver _myReceiver = new MyReceiver();

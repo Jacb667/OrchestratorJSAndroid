@@ -24,6 +24,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import java.lang.reflect.Method;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,6 +37,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.ojs.OrchestratorJsActivity;
 import com.ojs.R;
 import com.ojs.helpers.SettingHelpers;
 
@@ -89,7 +91,33 @@ public class CapabilitySettingsActivity extends PreferenceActivity {
 	}
 
 
-
+	/*
+	 * Author: Jacb667
+	 * 
+	 * This method determines if the class is valid or not. A valid class must be available and include a public method called "initCapability".
+	 */
+	private boolean isCapabilityAccessible(String capabilityName) {
+		
+		ClassLoader classLoader = getClassLoader();
+		
+		try
+		{
+			String packagePrefix = Character.toString(Character.toLowerCase(capabilityName.charAt(0)))+capabilityName.substring(1);
+	
+			Class<?> clazz = classLoader.loadClass(OrchestratorJsActivity.CAPABILITY_PATH+packagePrefix+"/"+capabilityName);
+			Object o = clazz.newInstance();
+	
+			Object[] object = new Object[] {clazz, o};
+	
+			clazz.getMethod("initCapability", new Class[] { Context.class });
+			
+			return true;
+		}
+		catch (Exception e)
+		{
+			return false;
+		}
+	}
 
 	public void createPreferenceHierarchy(){
 		
@@ -119,6 +147,14 @@ public class CapabilitySettingsActivity extends PreferenceActivity {
 							CheckBoxPreference cb = new CheckBoxPreference(CapabilitySettingsActivity.singletonReference);
 							cb.setTitle(capability);
 							firstCategory.addPreference(cb);
+							
+							// If is not valid, we disable the checkbox
+							if (!isCapabilityAccessible(capability))
+							{
+								cb.setEnabled(false);
+								CapabilitySettingsActivity.enabledCapabilities.remove(capability);
+							}
+							
 							cb.setChecked(CapabilitySettingsActivity.enabledCapabilities.contains(capability));
 							cb.setOnPreferenceChangeListener(sBindPreferenceSummaryToValueListener);
 						}
