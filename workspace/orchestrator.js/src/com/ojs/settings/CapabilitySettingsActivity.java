@@ -123,8 +123,7 @@ public class CapabilitySettingsActivity extends PreferenceActivity {
 		
 		new Thread(new Runnable() {
 			public void run() {
-
-				Looper.prepare();
+				//Looper.prepare();
 				p(enabledCapabilities.toString());
 				p("niiinkuu");
 				CapabilitySettingsActivity.CAPSBILITIES = getInterfacesListFromServer();

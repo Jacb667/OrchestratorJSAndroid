@@ -665,7 +665,7 @@ public class OrchestratorJsActivity extends Activity {
 		try {
 			new Thread(new Runnable() {
 				public void run() {
-					Looper.prepare();
+					//Looper.prepare();
 					runOnUiThread(new Runnable() {
 						public void run() {
 							ImageView image = (ImageView) OrchestratorJsActivity.singleton.findViewById(R.id.hearbeatBlink);
