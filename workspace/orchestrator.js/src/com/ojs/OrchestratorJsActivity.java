@@ -9,6 +9,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map.Entry;
 
 import java.util.List;
 import java.util.Set;
@@ -73,7 +74,7 @@ public class OrchestratorJsActivity extends Activity {
 	
 	private String currentActionId = "";
 	private String currentMethodcallId = "";
-
+	private static Boolean connected;
 	
 	private static Set<String> enabledCapabilities = null; //new String[] {"TalkingDevice", "PlayerDevice", "UrlScreen"};
 	private HashMap<String, Object[]> capabilityObjects;
@@ -216,7 +217,8 @@ public class OrchestratorJsActivity extends Activity {
 			public void onClick(View v) {
 				// disconnect();
 				try {
-					client.disconnect();
+					if (client != null)
+						client.disconnect();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -299,6 +301,7 @@ public class OrchestratorJsActivity extends Activity {
 				i.putExtra("notificationMessage", "Connected to orchestrator.js");
 				i.putExtra("notificationType", 1);
 				sendBroadcast(i);
+				setConnected(true);
 			}
 
 			@Override
@@ -337,6 +340,7 @@ public class OrchestratorJsActivity extends Activity {
 			public void onDisconnect(int code, String reason) {
 				Log.d(TAG, String.format("Disconnected! Code: %d Reason: %s",
 						code, reason));
+				setConnected(false);
 			}
 
 			@Override
@@ -347,6 +351,7 @@ public class OrchestratorJsActivity extends Activity {
 				i.putExtra("notificationMessage", "Cannot connect to orchestrator.js");
 				i.putExtra("notificationType", -1);
 				sendBroadcast(i);
+				setConnected(false);
 			}
 
 			@Override
@@ -619,12 +624,13 @@ public class OrchestratorJsActivity extends Activity {
 			p("notification");
 			String notificationMessage = intent.getStringExtra("notificationMessage");
 			int notificationType = intent.getIntExtra("notificationType",0);
+						
 			if(notificationType == -1)
-				Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_SHORT).show();
 			else if(notificationType == 1)
 				Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_SHORT).show();
 			else
-				Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_LONG).show();
+				Toast.makeText(getApplicationContext(), notificationMessage, Toast.LENGTH_SHORT).show();
 		}
 	};
 	
@@ -698,5 +704,54 @@ public class OrchestratorJsActivity extends Activity {
 			}
 		}
 	};
+	
+	
+	
+	public void setConnected(Boolean status)
+	{
+		connected = status;
+		
+		// Tell all the capabilities we have been disconnected
+		if (status == false)
+		{
+			p("Broadcast disconnected status to capabilities");
+			
+			try
+			{
+				ClassLoader classLoader = getClassLoader();
+
+				for (Entry<String, Object[]> capabilityEntry : capabilityObjects.entrySet())
+				{
+					Class<?> clazz = (Class<?>) capabilityEntry.getValue()[0];
+					Object o = capabilityEntry.getValue()[1];
+	
+					try
+					{
+						Method onDisconnectMethod = clazz.getMethod("onDisconnect", new Class[] { });
+						if (onDisconnectMethod != null)
+							onDisconnectMethod.invoke(o, new Object[] { });
+					}
+					catch (NoSuchMethodException e)
+					{
+						
+					}
+					catch (Exception e)
+					{
+						p("Error onDisconnect " + capabilityEntry.getKey());
+					}
+				}
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public static Boolean getConnected()
+	{
+		return connected;
+	}
+
 
 }
