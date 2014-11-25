@@ -13,7 +13,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.provider.ContactsContract;
 
-
 public class ContactCapability {
 	
 	private static Context applicationContext_;

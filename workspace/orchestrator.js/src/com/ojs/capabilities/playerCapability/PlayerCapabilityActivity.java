@@ -1,6 +1,5 @@
 package com.ojs.capabilities.playerCapability;
 
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.util.Log;
@@ -9,7 +8,6 @@ import android.widget.RelativeLayout;
 
 public class PlayerCapabilityActivity extends Activity {
 
-	
 	protected static final String TAG = PlayerCapabilityActivity.class.getSimpleName();
 
 	@Override
@@ -35,17 +33,10 @@ public class PlayerCapabilityActivity extends Activity {
 		} catch (Exception e) {
 			p(e.toString());
 		}
-		
-		
 	}
-
-
-	
 	
 	private void p(String s) {
 		Log.d(TAG, s);
 	}
 
-	
-	
 }

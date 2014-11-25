@@ -230,6 +230,16 @@ public class OrchestratorJsActivity extends Activity {
 		connectBtn.getBackground().setColorFilter(Color.parseColor("#34A6C9"), PorterDuff.Mode.CLEAR);
 		disconnectBtn.getBackground().setColorFilter(Color.parseColor("#34A6C9"), PorterDuff.Mode.CLEAR);
 
+		// DEBUG
+		/*com.ojs.capabilities.locateCapability.LocateCapability capa = new com.ojs.capabilities.locateCapability.LocateCapability();
+		try {
+			capa.initCapability(getApplicationContext());
+			capa.requestLocateProfile("hola");
+			//capa.askLocatePerson("Hola aqui estamos", "[{}, {}]");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}*/
 	}
 
 	@Override

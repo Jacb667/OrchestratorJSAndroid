@@ -129,7 +129,8 @@ public class SocketIOClient {
         mSendHandler.post(new Runnable() {
             @Override
             public void run() {
-                mClient.send(String.format("5:" + nextId + "+::%s", event.toString()));
+            	if (mClient != null)
+            		mClient.send(String.format("5:" + nextId + "+::%s", event.toString()));
             }
         });
     }

@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tests.MainActivity" >
+    tools:context="com.ojs.capabilities.visitingCardCapability" >
 
     <ImageView
         android:id="@+id/showVCimage"
@@ -29,7 +29,7 @@
         android:layout_marginTop="38dp"
         android:lines="4"
         android:maxLines="4"
-        android:text="&lt;Description>"
+        android:text="--Description--"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -41,7 +41,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="20dp"
-        android:text="&lt;Email>"
+        android:text="--Email--"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -54,7 +54,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
-        android:text="&lt;Phone>"
+        android:text="--Phone--"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView
@@ -67,7 +67,7 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginTop="30dp"
-        android:text="&lt;Address>"
+        android:text="--Address--"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <Button
@@ -85,7 +85,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignRight="@+id/showVCcloseButton"
         android:layout_marginTop="33dp"
-        android:text="&lt;Name>"
+        android:text="--Name--"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

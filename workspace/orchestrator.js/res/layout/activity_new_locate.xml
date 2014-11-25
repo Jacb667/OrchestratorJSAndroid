@@ -1,0 +1,85 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="#FFFFFF"
+    tools:context="com.ojs.capabilities.phoneNumberCapability" >
+
+    <Button
+        android:id="@+id/newLocateCancelar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/newLocateAceptar"
+        android:layout_alignBottom="@+id/newLocateAceptar"
+        android:layout_alignRight="@+id/newLocateInsert"
+        android:text="Cancel" />
+
+    <Button
+        android:id="@+id/newLocateAceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/newLocateInsert"
+        android:layout_alignParentBottom="true"
+        android:text="Accept" />
+
+    <EditText
+        android:id="@+id/newLocateInsert"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newLocateCancelar"
+        android:layout_alignLeft="@+id/newLocateTitle"
+        android:layout_alignRight="@+id/newLocateTitle"
+        android:ems="10"
+        android:inputType="textCapWords|textNoSuggestions|textPersonName" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/newLocateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="27dp"
+        android:gravity="center"
+        android:lines="2"
+        android:text="Enter your nick and avatar"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="10pt"
+        android:width="280dp" />
+
+    <Button
+        android:id="@+id/newLocateImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/newLocateInsert"
+        android:layout_alignRight="@+id/newLocateInsert"
+        android:layout_marginBottom="23dp"
+        android:text="Select Image" />
+
+    <TextView
+        android:id="@+id/newLocatePersonMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/newLocateTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="23dp"
+        android:gravity="center"
+        android:lines="4"
+        android:text="TextView"
+        android:width="250dp" />
+
+    <ImageView
+        android:id="@+id/newLocateImage"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_alignBottom="@+id/newLocateImageButton"
+        android:layout_alignLeft="@+id/newLocateInsert"
+        android:src="@drawable/person" />
+
+</RelativeLayout>

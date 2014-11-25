@@ -1,11 +1,7 @@
-package com.ojs.capabilities.bluetoothCapability;
+package com.ojs.capabilities.locateCapability;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import com.ojs.OrchestratorJsActivity;
 
@@ -15,24 +11,20 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
 import android.util.Log;
 
-public class BluetoothCapability {
+public class LocateBluetoothHelper {
 	
 	private static Context applicationContext_;
 	
 	private BluetoothAdapter mBtAdapter;
-    private Map<String, Integer> mDevicesMap;
-    private boolean connected = false;
+    private String targetMac = null;
     
-    private Handler myHandler = new Handler();
+	private Timer timer;
 
-	public void initCapability( Context applicationContext )
-	{
-		BluetoothCapability.applicationContext_ = applicationContext;
-		
-		mDevicesMap = new HashMap<String, Integer>();
+    public LocateBluetoothHelper(Context applicationContext)
+    {
+    	LocateBluetoothHelper.applicationContext_ = applicationContext;
 		
 		// Register for broadcasts when a device is discovered
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -44,21 +36,36 @@ public class BluetoothCapability {
 
         // Get the local Bluetooth adapter
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
-	}
-
-	public void updateProximity(Integer delay) throws Exception
+        
+        timer = new Timer();
+    }
+    
+    public void setTarget(String bmac)
+    {
+    	targetMac = bmac;
+    }
+    
+	public void updateProximity() throws Exception
 	{
-		Log.d(OrchestratorJsActivity.TAG, "updating bluetooth proximity!");
-		connected = true;
+		System.out.println("Updating Bluetooth!");
 		
-		doDiscovery();
-		
-		if (delay != 0)
-        	myHandler.postDelayed(sendDevices, delay*1000);
+		TimerTask updateBT = new TimerTask()
+		{       
+			@Override
+		    public void run()
+		    {
+				doDiscovery();
+		    }
+		};
+		timer = new Timer();
+		timer.schedule(updateBT, 0, 12000);
 	}
 	
 	private void doDiscovery()
 	{
+		if (mBtAdapter == null)
+			return;
+		
         // If we're already discovering, stop it
         if (mBtAdapter.isDiscovering()) {
             mBtAdapter.cancelDiscovery();
@@ -66,40 +73,6 @@ public class BluetoothCapability {
          // Request discover from BluetoothAdapter
         mBtAdapter.startDiscovery();
     }
-	
-	private Runnable sendDevices = new Runnable()
-	{
-	    public void run()
-	    {
-	    	try
-	    	{
-	    		// Create a JSON Object to send the data
-	    		JSONObject sendData = new JSONObject();
-	    		
-	    		// Create a JSON Array to store all the devices
-	    		JSONArray devices = new JSONArray();
-	    		
-	    		for (Entry<String, Integer> entry : mDevicesMap.entrySet())
-	    		{
-	    			// Create a JSON Array to add the device
-	    			JSONArray device = new JSONArray();
-		    		device.put(entry.getKey());
-		    		device.put(entry.getValue());
-		    		
-		    		// Add the device to devices array
-		    		devices.put(device);
-	    		}
-	    		System.out.println("SENDING BLUETOOTH DATA!");
-	    		sendData.put("bt_devices", devices);
-		    	System.out.println(sendData);
-				OrchestratorJsActivity.ojsContextData(sendData);
-	    	}
-	    	catch(Exception ex)
-	    	{
-	    		
-	    	}
-	    }
-	};
 	
 	// The BroadcastReceiver that listens for discovered devices and
     // changes the title when discovery is finished
@@ -117,22 +90,36 @@ public class BluetoothCapability {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 int RSSI = intent.getShortExtra(BluetoothDevice.EXTRA_RSSI, Short.MIN_VALUE);
 
-                mDevicesMap.put(device.getAddress().toLowerCase(), RSSI);
-            }
-            // When discovery is finished, change the Activity title
-            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action))
-            {
-            	if (connected && OrchestratorJsActivity.getConnected())
-            		sendDevices.run();
+                System.out.println("Found " + device.getAddress());
+                if (device.getAddress().equalsIgnoreCase(targetMac))
+                {
+                	LocateCapability.setTargetRSSI(RSSI);
+                }
             }
         }
     };
+    
+    /*private TimerTask updateBT = new TimerTask()
+	{       
+		@Override
+	    public void run()
+	    {
+	        handler.post(new Runnable()
+	        {
+	            public void run()
+	            {
+	            	doDiscovery();
+	            }
+	        });
+	    }
+	};*/
     
     public void onDisconnect()
     {
     	Log.d(OrchestratorJsActivity.TAG, "BluetoothCapability: Connection lost");
     	
-    	connected = false;
+    	timer.cancel();
+    	timer = null;
     	
     	// Make sure we're not doing discovery anymore
         if (mBtAdapter != null) {
@@ -141,5 +128,5 @@ public class BluetoothCapability {
          // Unregister broadcast listeners
         applicationContext_.unregisterReceiver(mReceiver);
     }
-
+    
 }

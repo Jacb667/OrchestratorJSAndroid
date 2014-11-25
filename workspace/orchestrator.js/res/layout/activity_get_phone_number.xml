@@ -28,7 +28,7 @@
         android:layout_marginTop="32dp"
         android:gravity="center"
         android:lines="2"
-        android:text="Introduzca su número de teléfono"
+        android:text="Enter your phone number"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="10pt"
         android:width="280dp" />
@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/phoneNumberInsert"
         android:layout_below="@+id/phoneNumberInsert"
-        android:text="Aceptar" />
+        android:text="Accept" />
 
     <Button
         android:id="@+id/phoneNumberCancelar"
@@ -60,7 +60,7 @@
         android:layout_alignBaseline="@+id/phoneNumberAceptar"
         android:layout_alignBottom="@+id/phoneNumberAceptar"
         android:layout_alignRight="@+id/phoneNumberInsert"
-        android:text="Cancelar" />
+        android:text="Cancel" />
 
     <EditText
         android:id="@+id/phoneNumberInsert"

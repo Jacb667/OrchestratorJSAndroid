@@ -49,7 +49,7 @@ public class ShowVisitingCardActivity extends Activity {
         Intent args = getIntent();
 
         String preview = args.getStringExtra("preview");
-        if (preview == null)
+        if (preview == null && (savedInstanceState == null || !savedInstanceState.getBoolean("done")))
         {
         	Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 			v.vibrate(500);
@@ -86,6 +86,13 @@ public class ShowVisitingCardActivity extends Activity {
 	private void p(String s)
 	{
 		Log.d(TAG, s);
+	}
+	
+	@Override
+	public void onSaveInstanceState(Bundle savedInstanceState)
+	{
+	    savedInstanceState.putBoolean("done", true);
+	    super.onSaveInstanceState(savedInstanceState);
 	}
 	
 }

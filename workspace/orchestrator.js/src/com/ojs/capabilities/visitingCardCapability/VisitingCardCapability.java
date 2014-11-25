@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
-
 public class VisitingCardCapability extends Activity {
 
 	private static Context applicationContext_;
@@ -30,7 +29,7 @@ public class VisitingCardCapability extends Activity {
 		intent.putExtra("image", image);
 		applicationContext_.startActivity(intent);
 	}
-		
+	
 	public void requestVisitingCard()
     {
 		Intent intent = new Intent(VisitingCardCapability.applicationContext_, NewVisitingCardActivity.class);

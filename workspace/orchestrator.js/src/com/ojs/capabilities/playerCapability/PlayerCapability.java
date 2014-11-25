@@ -1,7 +1,5 @@
 package com.ojs.capabilities.playerCapability;
 
-
-
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,7 +21,6 @@ import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
-
 
 public class PlayerCapability {
 

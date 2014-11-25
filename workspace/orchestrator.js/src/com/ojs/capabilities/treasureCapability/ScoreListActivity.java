@@ -1,4 +1,4 @@
-package com.ojs.capabilities.notificationCapability;
+package com.ojs.capabilities.treasureCapability;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -26,9 +25,9 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
-public class NotificationCapabilityActivity extends Activity {
+public class ScoreListActivity extends Activity {
 
-	protected static final String TAG = NotificationCapabilityActivity.class.getSimpleName();
+	protected static final String TAG = ScoreListActivity.class.getSimpleName();
 	
 	private Handler myHandler = new Handler();
 	
@@ -42,7 +41,7 @@ public class NotificationCapabilityActivity extends Activity {
 		
         setContentView(R.layout.activity_notification);
 
-		p("NotificationCapabilityActivity created!");
+		p("ScoreListActivity created!");
 		
 
 		Intent args = getIntent();
@@ -64,26 +63,21 @@ public class NotificationCapabilityActivity extends Activity {
 			try
 			{
 				List<Map<String, String>> datalist = new ArrayList<Map<String, String>>();
-				JSONArray jsonarray = new JSONArray(jsondata);
+				JSONObject jsonobject = new JSONObject(jsondata);
 				
-				for (int i = 0; i < jsonarray.length(); i++)
-				{
-					JSONObject json = jsonarray.getJSONObject(i);
-					
-					Iterator<?> keys = json.keys();
-			        while( keys.hasNext() )
-			        {
-			            String key = (String) keys.next();
-			            Map<String, String> map = new HashMap<String, String>();
-			            map.put(LV_TITLE, key);
-			            Object object = json.get(key);
-			            if (object instanceof Integer)
-			            	map.put(LV_TEXT, ((Integer) object).toString());
-			            else if (object instanceof String)
-			            	map.put(LV_TEXT, (String) object);
-			            datalist.add(map);
-			        }
-				}
+				Iterator<?> keys = jsonobject.keys();
+		        while( keys.hasNext() )
+		        {
+		            String key = (String) keys.next();
+		            Map<String, String> map = new HashMap<String, String>();
+		            map.put(LV_TITLE, key);
+		            Object object = jsonobject.get(key);
+		            if (object instanceof Integer)
+		            	map.put(LV_TEXT, ((Integer) object).toString());
+		            else if (object instanceof String)
+		            	map.put(LV_TEXT, (String) object);
+		            datalist.add(map);
+		        }
 				
 				ListAdapter listAdapter = new SimpleAdapter(this, datalist, android.R.layout.simple_list_item_2,
                         new String[] {LV_TITLE, LV_TEXT}, new int[] {android.R.id.text1, android.R.id.text2});

@@ -1,0 +1,93 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mapLocateLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.ojs.capabilities.phoneNumberCapability" >
+
+    <ProgressBar
+        android:id="@+id/mapLocateBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true" />
+
+    <Button
+        android:id="@+id/mapLocateClose"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:text="Stop" />
+
+    <TextView
+        android:id="@+id/mapLocateMyPosition1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/mapLocateClose"
+        android:text="Lat:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/mapLocateMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/mapLocateBar"
+        android:layout_below="@+id/mapLocateBar"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@+id/mapLocateImage"
+        android:gravity="center"
+        android:lines="4"
+        android:text="Title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/mapLocateDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/mapLocateClose"
+        android:layout_alignLeft="@+id/mapLocateImage"
+        android:layout_alignRight="@+id/mapLocateClose"
+        android:gravity="center"
+        android:lines="4"
+        android:text="Distance"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/mapLocateMyPosition2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mapLocateMyPosition1"
+        android:layout_alignRight="@+id/mapLocateMyPosition1"
+        android:layout_below="@+id/mapLocateMyPosition1"
+        android:text="Long:"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <ImageView
+        android:id="@+id/mapLocateImage"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignBottom="@+id/mapLocateMessage"
+        android:layout_alignLeft="@+id/mapLocateMyPosition2"
+        android:src="@drawable/person" />
+
+    <TextView
+        android:id="@+id/mapLocateBluetooth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/mapLocateImage"
+        android:layout_alignRight="@+id/mapLocateMessage"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:lines="2"
+        android:text="Bluetooth proximity"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
